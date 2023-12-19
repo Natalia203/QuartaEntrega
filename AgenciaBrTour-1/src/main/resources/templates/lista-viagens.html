@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	th:href="@{/bootstrap-5.1.3-dist/css/bootstrap.min.css}">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+<script th:src="@{/jquery-3.6.0-dist/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/bootstrap-5.1.3-dist/js/bootstrap.min.js}"></script>
+
+
+<title>Index</title>
+
+</head>
+<body>
+	  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand">BR Tour</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a th:href="@{/lista/cliente}" class="btn btn-primary"> Clientes</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/lista/destino}" class="btn btn-primary"> Destinos</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/lista/viagem}" class="btn btn-primary"> Viagens</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="row" style="padding-bottom: 30px;padding-top: 30px;">
+            <div class="col">
+				<h1>Lista de Viagens</h1>
+ 			</div>
+		</div> 
+				  
+		<div class="row">
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+						<th>ID</th>
+                        <th>Data da Ida</th>
+                        <th>Data da Volta</th>
+                        <th>ID Destino</th>
+                        <th>Ações</th>
+                    </tr>
+                <tbody>
+                    <tr th:if="${listaViagens.empty}">
+                        <td colspan="3">Não há registro de viagens.</td>
+                    </tr>
+                    <tr th:each="viagem : ${listaViagens}">
+                        <td><span th:text="${viagem.id_viagem}"></span></td>
+                        <td><span th:text="${viagem.data_ida}"></span></td>
+                        <td><span th:text="${viagem.data_volta}"></span></td>
+                        <td><span th:text="${viagem.destino}"></span></td>
+                        <td>
+							<a class="fa-regular fa-trash-can icon-dark btn-delete" 
+							th:href="@{/apagar/viagem/{viagem}(viagem=${viagem.id_viagem})}"
+							th:data-confirm-delete="|Você gostaria de apagar a viagem ${viagem.id_viagem}?|"
+							    th:onclick="if (!confirm(this.getAttribute('data-confirm-delete')))
+										      return false">								
+							</a>
+							&nbsp;
+							<a class="fa-regular fa-pen-to-square icon-dark"
+								th:href="@{/editar/viagem/{viagem}(viagem=${viagem.id_viagem})}"></a>
+						</td>
+                    </tr>
+                </tbody>
+                </thead>
+            </table>
+        </div>	
+
+		<div class="row" style="padding-bottom: 30px;">
+            <div class="col">
+               <a th:href="@{/nova/viagem}" class="btn btn-primary">Cadastrar Nova Viagem</a>
+ 			</div>
+		</div> 	
+        	                   
+	</div>
+</body>
+</html>
